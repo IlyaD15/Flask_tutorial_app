@@ -43,6 +43,7 @@ def url_fibonacci():
     return ans
 
 
+@app.route('/fibonacci/', defaults={'n': 0})
 @app.route('/fibonacci/<int:n>')
 def url_fibonacci_n(n):
     return fibonacci_value(n)
