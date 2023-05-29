@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import requests as rq
 
 app = Flask(__name__)
@@ -6,20 +6,45 @@ app = Flask(__name__)
 count = 0
 
 
+def exchange_rate():
+    res = rq.get('https://www.cbr-xml-daily.ru/daily_json.js').json()['Valute']
+
+    ans = ''
+
+    for key in res.keys():
+        val = res[key]
+        nominal = val['Nominal']
+        name = val['Name']
+        value = val['Value']
+
+        ans += f'{nominal} {name} стоит {value} руб.<br>'
+
+    return ans
+
+
+valutes = exchange_rate()
+
+
 @app.route('/')
 @app.route('/home')
 def url_home():
-    return "Главная страница"
+    return render_template('index.html')
 
 
 @app.route('/news')
 def url_news():
-    return "Страница с новостями"
+    return render_template('web_page.html',
+                           title='Страница с новостями',
+                           text='Страница с новостями'
+                           )
 
 
 @app.route('/about')
 def url_about():
-    return "Сайт с новостями"
+    return render_template('web_page.html',
+                           title='Сайт с новостями',
+                           text='Сайт с новостями'
+                           )
 
 
 def fibonacci_value(n):
@@ -40,7 +65,10 @@ def url_fibonacci():
 
         a, b = b, a + b
 
-    return ans
+    return render_template('web_page.html',
+                           title='Первые 100 чисел Фибоначчи',
+                           text=ans
+                           )
 
 
 @app.route('/fibonacci/', defaults={'n': 0})
@@ -51,20 +79,10 @@ def url_fibonacci_n(n):
 
 @app.route('/money')
 def url_money():
-    res = rq.get('https://www.cbr-xml-daily.ru/daily_json.js')
-    res = res.json()['Valute']
-
-    ans = ''
-
-    for key in res.keys():
-        val = res[key]
-        nominal = val['Nominal']
-        name = val['Name']
-        value = val['Value']
-
-        ans += f'{nominal} {name} стоит {value} руб.<br>'
-
-    return ans
+    return render_template('web_page.html',
+                           title='Курс валют',
+                           text=valutes
+                           )
 
 
 @app.route('/random')
@@ -75,7 +93,10 @@ def url_random():
     quote = res['quoteText']
     author = res['quoteAuthor']
 
-    return f'{quote}<br><br>{author}'
+    return render_template('web_page.html',
+                           title='Цитата',
+                           text=f'{quote}<br><br><b>{author}</b>'
+                           )
 
 
 @app.route('/count')
@@ -84,6 +105,11 @@ def url_count():
     count += 1
 
     return f'Вы зашли на эту страницу {count} раз(а)'
+
+
+@app.route('/tutorial')
+def url_tutorial():
+    return render_template('tutorial.html')
 
 
 if __name__ == "__main__":
