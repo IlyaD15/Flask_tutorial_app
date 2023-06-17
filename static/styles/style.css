@@ -1,0 +1,82 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    background: gainsboro;
+}
+
+.wrapper {
+    width: 900px;
+    margin: 0 auto;
+    background: white;
+}
+
+header {
+    background: orange;
+    padding: 15px;
+}
+header a {
+    text-decoration: none;
+    color: white;
+    font: 18px Arial;
+    margin-right: 15px;
+}
+header a.active, header a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    font: bold 22px Arial;
+    margin: 0;
+}
+h2 {
+    font: bold 20px Arial;
+    margin: 0;
+    margin-bottom: 10px;
+}
+h3 {
+    font: bold 18px Arial;
+    margin: 0;
+}
+
+.container {
+    padding: 20px;
+    display: flex;
+    text-align: justify;
+    font: 16px Arial;
+    margin-bottom: 0;
+}
+main {
+    width: 500px;
+    margin-right: 20px;
+}
+main img {
+    width: 500px;
+}
+main table {
+    margin-bottom: 10px;
+}
+main th {
+    background: lightgrey;
+    text-align: center;
+    width: 166px;
+    border: 1px solid black;
+}
+main td {
+    text-align: center;
+    border: 1px solid black;
+}
+
+aside {
+    width: 380px;
+}
+
+footer {
+    background: orange;
+    color: white;
+    text-align: center;
+    margin-bottom: 0;
+    padding: 10px;
+    font: 16px Arial;
+}
